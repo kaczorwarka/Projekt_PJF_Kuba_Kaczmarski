@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pl" class="p-3 mb-2 bg-secondary text-white bg-opacity-75">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Run Site</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="p-3 mb-2 bg-secondary text-white bg-opacity-75">
+    <div class="container-fluid" style="height: 200px">
+        <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-xs-8 border-bottom border-2" style="padding: 1rem;">
+                <h1>Welcome to my site</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 ">
+                <div class="row">
+                    <div class="col-lg-5 col-md-4 col-sm-5">
+                        <p class="h3 fw-bolder">Put Your data here:</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-8 border-bottom border-top border-1 rounded-1"></div>
+                </div>
+                <form method="post">
+                     {% csrf_token %}
+                    <div class="row ">
+                        <div class="col" style="padding-top: 1.15rem; padding-bottom: 1.15rem;">
+                            <label for="Input" class="fw-bolder fs-5 border-end" style="padding: 0">City: &nbsp</label>
+                            {{Data.city}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-8 border-bottom border-top border-1 rounded-1"></div>
+                    </div>
+                    <div class="row ">
+                        <div class="col" style="padding-top: 1.15rem; padding-bottom: 1.15rem;">
+                            <label for="Input1" class="fw-bolder fs-5 border-end" style="padding: 0">Date from: &nbsp</label>
+                            {{Data.date_from}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-8 border-bottom border-top border-1 rounded-1"></div>
+                    </div>
+                    <div class="row ">
+                        <div class="col" style="padding-top: 1.15rem; padding-bottom: 1.15rem;">
+                            <label class="fw-bolder fs-5 border-end" style="padding: 0">Date to: &nbsp</label>
+                            {{Data.date_to}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-8 border-bottom border-top border-1 rounded-1"></div>
+                    </div>
+                   <div class="row ">
+                        <div class="col" style="padding-top: 1.15rem; padding-bottom: 1.15rem;">
+                            <label for="Input3" class="fw-bolder fs-5 border-end" style="padding: 0">Distance from: &nbsp</label>
+                            {{Data.distance_from}}
+                        </div>
+                   </div>
+                   <div class="row" style="padding-bottom: 1rem;">
+                       <div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-8 border-bottom border-top border-1 rounded-1"></div>
+                   </div>
+                   <div class="row ">
+                        <div class="col" style="padding-top: 1.15rem; padding-bottom: 1.15rem;">
+                            <label class="fw-bolder fs-5 border-end" style="padding: 0">Distance to: &nbsp</label>
+                            {{Data.distance_to}}
+                        </div>
+                   </div>
+                   <div class="row" style="padding-bottom: 1rem;">
+                       <div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-8 border-bottom border-top border-1 rounded-1"></div>
+                   </div>
+                       <button class="btn btn-success" type="submit">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                               <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                           </svg>
+                       </button>
+
+                </form>
+            </div>
+
+            {% if Runs %}
+            <div class="col" style="padding-top: 1rem;">
+
+                <div id="carouselExampleIndicators" class="carousel slide border rounded">
+                    <div class="carousel-inner">
+                        {% for key, run in Runs.items %}
+                            {% if forloop.first %}
+                                <div class="carousel-item active" align="center" style="height: 30rem;">
+                            {% else %}
+                                <div class="carousel-item" align="center" style="height: 30rem;">
+                            {% endif %}
+                                <div class="card" style="width: 18rem; height: 27rem; top: 1rem;">
+
+                                    {% if run.number == forloop.counter %}
+                                        <img src={{run.image}} class="card-img-top" height="175">
+                                    {% endif %}
+
+                                    <div class="card-body text-black">
+                                        <h5 class="card-title">{{key}}</h5>
+                                        {% for name, values in run.items %}
+                                            {% if name != "number" %}
+                                                {% if name != "image" %}
+                                                    <p class="card-text">{{name}}: {{values}}</p>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <a href="{{run.number}}" class="btn btn-primary">Train</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="carousel-indicators">
+                        {% for key, run in Runs.items %}
+                            {% if forloop.counter0 == 0 %}
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true"></button>
+                            {% else %}
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{forloop.counter0}}" ></button>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    </div>
+
+
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+    <div class="title">
+        <h1>Welcome to my Run Site</h1>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="positioning">
+        <div class="in">
+        <h2>Put Your data here:</h2>
+        <div class="line"></div>
+        <br/>
+        <form method="post" class="data">
+            {% csrf_token %}
+            <label>City: </label>
+            {{Data.city}}
+            <div class="line"></div>
+            <br/>
+            <label>Date: </label>
+            {{Data.date}}
+            <div class="line"></div>
+            <br/>
+            <label>Distance: </label>
+            {{Data.distance}}
+            <div class="line"></div>
+            <br/>
+            <button class="b1" type="submit" id="save">cos</button>
+        </form>
+        </div>
+        {% if Runs %}
+        <div class="runs">
+            {% for key, run in Runs.items %}
+                <a href="{{run.number}}">
+                    <button class="run">
+                        <div class="key">{{key}}</div>
+                        {% for name, values in run.items %}
+                            {% if name != "number" %}
+                                {{name}}:
+                                {{values}}&nbsp;&nbsp;
+                            {% endif %}
+                        {% endfor %}
+                    </button>
+                </a>
+            </br>
+            </br>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+-->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+</html>
