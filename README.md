@@ -14,6 +14,7 @@ In addition user can check basic event informations like name, location or compe
 * Beautifulsoup4 4.11.1
 * Geocoder 1.38.1
 * Requests 2.28.1
+* Bootstrap 5.3
 
 ## SETUP
 After selecting the folder where the project will be located, open terminal and type the following commands:
