@@ -184,10 +184,10 @@ def full_training(weeks, actual_week, distance, week, mode, plan, speed):
                 plan[str(i)][week[day]] = "odpoczynek"
             elif day == 1 and 5 < distance < 11:
                 plan[str(i)][week[day]] = "bieg na " + str(round(distance / 2)) + "km w czasie " + \
-                                          speed_to_str(min_speed * 0.5) + " min/km"
+                                          speed_to_str(min_speed * 0.7) + " min/km"
             elif day == 1 and 5 < distance < 22:
                 plan[str(i)][week[day]] = "bieg na " + str(round(distance / 2)) + "km w czasie " + \
-                                          speed_to_str(min_speed * 0.7) + " min/km"
+                                          speed_to_str(min_speed * 0.8) + " min/km"
             elif day == 1 and 5 < distance:
                 plan[str(i)][week[day]] = "bieg na " + str(round(distance / 2)) + "km w czasie " + \
                                           speed_to_str(min_speed * 0.9) + " min/km"
@@ -283,11 +283,11 @@ def home(request):
                         image = doc2.find('img')
                         run["image"] = image['src']
 
-                    # w wypadku wystapnie biegu z taka sama nazwa dodanie numerka do nazyw
-                    if name in runs:
-                        runs[name+" ("+str(i/2)[0]+")"] = run
-                    else:
-                        runs[name] = run
+                        # w wypadku wystapnie biegu z taka sama nazwa dodanie numerka do nazyw
+                        if name in runs:
+                            runs[name+" ("+str(i/2)[0]+")"] = run
+                        else:
+                            runs[name] = run
     else:
         form = getData()
     return render(request, "runsite/home.html", {"Data": form, "Runs": runs})
